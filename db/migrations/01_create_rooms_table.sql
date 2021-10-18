@@ -1,0 +1,1 @@
+CREATE TABLE rooms(id SERIAL PRIMARY KEY, user_id REFERENCES(users(id)));
