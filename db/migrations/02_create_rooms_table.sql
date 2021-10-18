@@ -3,7 +3,7 @@ CREATE TABLE rooms (
   user_id         INT REFERENCES users(id),
   title           VARCHAR(30),
   description     VARCHAR(200),
-  price           MONEY NOT NULL,
+  price           MONEY,
   location        VARCHAR(30),
   available_from  DATE,
   available_till  DATE
