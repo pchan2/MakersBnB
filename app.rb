@@ -1,5 +1,6 @@
 require "sinatra/base"
 require "sinatra/reloader"
+require './lib/users'
 
 class MakersBnB < Sinatra::Base
   configure :development do
@@ -13,7 +14,9 @@ class MakersBnB < Sinatra::Base
   end
 
   post "/signin-submit" do
-    session[:username] = params[:username]
+    user = User.add(name: params[:username])
+    session[:username] = user.name
+
     redirect '/rooms'
   end
 
