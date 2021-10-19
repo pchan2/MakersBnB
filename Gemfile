@@ -11,4 +11,5 @@ gem 'capybara'
 gem 'rubocop'
 gem 'simplecov'
 gem 'simplecov-console'
+gem "pg"
 
