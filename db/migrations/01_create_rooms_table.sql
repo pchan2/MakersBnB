@@ -1,1 +1,1 @@
-CREATE TABLE rooms(id SERIAL PRIMARY KEY, user_id REFERENCES(users(id)));
+CREATE TABLE rooms(id SERIAL PRIMARY KEY, user_id INT REFERENCES users(id), title VARCHAR(30), description VARCHAR(200), price MONEY NOT NULL, location VARCHAR(30));
