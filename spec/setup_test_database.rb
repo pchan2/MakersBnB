@@ -34,12 +34,12 @@ def populate_rooms(connection)
 end
 
 def populate_rented_rooms(connection)
-  connection.exec("INSERT INTO rented_rooms(room_id, user_id, occupied_date)
-    VALUES(1, 1, '2001-10-19');"
+  connection.exec("INSERT INTO rented_rooms(room_id, user_id, occupied_date, approved)
+    VALUES(1, 1, '2001-10-19', FALSE);"
   )
 
-  connection.exec("INSERT INTO rented_rooms(room_id, user_id, occupied_date)
-    VALUES(2, 2, '2021-12-25');"
+  connection.exec("INSERT INTO rented_rooms(room_id, user_id, occupied_date, approved)
+    VALUES(2, 2, '2021-12-25', TRUE);"
   )
 
 end
