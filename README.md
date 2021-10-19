@@ -1,6 +1,13 @@
 # MakersBnB
 bundle install
 
+SET_UP DATABASES
+
+1) CREATE database makersbnb;
+2) connect and use migrations files to create user, rooms and rented_rooms table
+3) CREATE database makersbnb_test
+4) repeat table creation above
+
 MakersBnB specification
 
 We would like a web application that allows users to list spaces they have available, and to hire spaces for the night.
