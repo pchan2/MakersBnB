@@ -1,0 +1,1 @@
+ALTER TABLE rented_rooms ADD approved BOOLEAN;

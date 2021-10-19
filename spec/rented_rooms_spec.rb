@@ -7,6 +7,11 @@ describe Rented_rooms do
 
       expect(rented_room.room_id).to eq "2"
       expect(rented_room.user_id).to eq "1"
+      expect(rented_room.occupied_date).to eq "2021-10-14"
+      expect(rented_room.approved).to eq false
+      
     end
+
+
   end
 end
