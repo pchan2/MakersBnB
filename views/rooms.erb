@@ -1,1 +1,10 @@
 Welcome <%= @username %>
+
+<%@rooms.each{|room|%>
+  <p> 
+  <li><%=room.title%> 
+  <li><%=room.description%>
+  <li><%=room.price%>
+  <li><%=room.location%>
+  </p>
+<%}%>
