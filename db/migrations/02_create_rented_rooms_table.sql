@@ -1,8 +1,6 @@
-CREATE TABLE rooms(
-  id SERIAL PRIMARY KEY,
+CREATE TABLE rented_rooms(
+  id SERIAL PRIMARY KEY, 
+  oom_id INT REFERENCES rooms(id),
   user_id INT REFERENCES users(id),
-  title VARCHAR(30),
-  description VARCHAR(200),
-  price MONEY NOT NULL,
-  location, VARCHAR(30)
+  datetime TIMESTAMP
 );
