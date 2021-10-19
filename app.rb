@@ -1,6 +1,6 @@
 require "sinatra/base"
 require "sinatra/reloader"
-require './lib/users'
+require './lib/user'
 
 class MakersBnB < Sinatra::Base
   configure :development do

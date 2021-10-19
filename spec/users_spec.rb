@@ -1,4 +1,5 @@
-require "users"
+require "user"
+
 describe '.add' do
   it 'adds users to database' do
     user = User.add(name: "Bob")
