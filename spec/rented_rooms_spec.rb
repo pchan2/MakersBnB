@@ -13,7 +13,12 @@ describe Rented_rooms do
       
     end
 
-
+    it "does not allow same user to book the same room on the same day" do
+      rented_room = Rented_rooms.request_room(user_id: 1, room_id: 2, occupied_date: "2021-10-14")
+      Rented_rooms.request_room(user_id: 1, room_id: 2, occupied_date: "2021-10-14")
+      result = PG.connect(dbname: "makersbnb_test").query("SELECT * FROM rented_rooms WHERE occupied_date = '2021-10-14' AND room_id = #{2} AND user_id = #{1}")
+      expect(result.ntuples).to eq 1
+    end
   end
 
   describe "#approve_request" do
@@ -26,6 +31,7 @@ describe Rented_rooms do
 
       result = connection.query("SELECT * FROM rented_rooms WHERE id = #{booking.id}")
       expect(result[0]["approved"]).to eq "t"
+      expect(booking.approved).to eq true
     end
 
     it "rejects the request" do
@@ -38,7 +44,19 @@ describe Rented_rooms do
       result = connection.query("SELECT * FROM rented_rooms WHERE id = #{booking.id}")
       expect(result.ntuples).to eq 0
     end
-  end
 
-  
+    it "rejects all requests when one is approved on the same date" do
+      user = User.add(name: "Larry")
+      room = Room.add(user_id:user.id, title: "under-stairs cupboard", description: "a cupboard under the stairs", price: 999, location: "The Potter household")
+      
+      booking = Rented_rooms.request_room(user_id:1, room_id: room.id, occupied_date: "1999-10-9")
+      Rented_rooms.request_room(user_id:2, room_id: room.id, occupied_date: "1999-10-9")
+      booking.approve_request(true)
+
+      connection = PG.connect(dbname: "makersbnb_test")
+
+      result = connection.query("SELECT * FROM rented_rooms WHERE occupied_date = '1999-10-9' AND room_id = #{room.id}")
+      expect(result.ntuples).to eq 1
+    end
+  end
 end
