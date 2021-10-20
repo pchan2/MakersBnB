@@ -6,7 +6,7 @@ class Rented_rooms
     @room_id = room_id
     @user_id = user_id
     @occupied_date = occupied_date
-    @approved = (approved == 't')
+    @approved = (approved == "t")
   end
 
   def self.request_room(user_id:, room_id:, occupied_date:)
@@ -16,7 +16,6 @@ class Rented_rooms
     else
       connection = PG.connect(dbname: "makersbnb")
     end
-
     result = connection.exec_params("INSERT INTO rented_rooms (room_id, user_id, occupied_date, approved) VALUES($1, $2, $3, $4) RETURNING id, room_id, user_id, occupied_date, approved;", [room_id, user_id, occupied_date, approved])
     Rented_rooms.new(id: result[0]["id"], user_id: result[0]["user_id"], room_id: result[0]["room_id"], occupied_date: result[0]["occupied_date"], approved: result[0]["approved"])
   end
