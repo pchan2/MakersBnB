@@ -41,7 +41,7 @@ class MakersBnB < Sinatra::Base
 
   post "/rooms/request" do
     title = params[:title]
-    database_switcher
+    connection = database_switcher
 
     result = connection.query("SELECT id FROM rooms WHERE title = '#{title}';")
     room_id = result[0]["id"].to_i
@@ -50,7 +50,13 @@ class MakersBnB < Sinatra::Base
   end
 
   get "/rooms/your_requests" do
-    @your_request = session[:your_requests].occupied_date
+    @occupied_date = session[:your_requests].occupied_date
+    @room_id = session[:your_requests].room_id
+    @username = session[:user].name
+    connection = database_switcher
+    result = connection.query("SELECT * FROM rooms WHERE id = '#{@room_id}';")
+    
+    @room_details = result[0]
     erb :'rooms/your_requests'
   end
 

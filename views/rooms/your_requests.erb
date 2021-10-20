@@ -1,2 +1,11 @@
-Hello
-<%= @your_request %>
+Hello <%= @username %>
+<br>
+You have requested <%= @room_details['title'] %>
+<br>
+<%= @room_details['description'] %>
+<br>
+<%= @room_details['price'] %>
+<br>
+<%= @room_details['location'] %>
+<br>
+on <%= @occupied_date %>
