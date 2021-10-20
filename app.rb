@@ -35,6 +35,13 @@ class MakersBnB < Sinatra::Base
     Room.add(user_id: session[:user].id, title: params[:title], description: params[:description], price: params[:price], location: params[:location])
     redirect '/rooms'
   end
+#user_id:, room_id:, occupied_date:
+  post '/rooms/request' do
+    @user_id = session[:user].id
+    title = params[:title]
+    
+    Rented_rooms.request_room(user_id: session[:user].id, room_id: params[:room_id], occupied_date:)
+  end
 
   run! if app_file == $0
 end

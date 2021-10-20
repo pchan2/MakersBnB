@@ -8,3 +8,9 @@ Welcome <%= @username %>
   <li><%=room.location%>
   </p>
 <%}%>
+
+<form action='/rooms/request' method='POST' >
+  <input type='text' name='title' />
+  <input type='date' name='occupied_date' />
+  <input type='submit' value='Submit' />
+</form>
