@@ -4,6 +4,7 @@ require "./lib/user"
 require "./lib/room"
 require_relative "./lib/rented_rooms.rb"
 require "pg"
+require './spec/database_helpers'
 
 class MakersBnB < Sinatra::Base
   configure :development do
@@ -39,15 +40,9 @@ class MakersBnB < Sinatra::Base
   end
 
   post "/rooms/request" do
-    # @user_id = session[:user].id
     title = params[:title]
-    if ENV["RACK_ENV"] == "test"
-      connection = PG.connect(dbname: "makersbnb_test")
-    else
-      connection = PG.connect(dbname: "makersbnb")
-    end
-    # connection = PG.connect(dbname: "makersbnb")
-    p "hello"
+    database_switcher
+
     result = connection.query("SELECT id FROM rooms WHERE title = '#{title}';")
     room_id = result[0]["id"].to_i
     session[:your_requests] = Rented_rooms.request_room(user_id: session[:user].id, room_id: room_id, occupied_date: params[:occupied_date])
@@ -55,7 +50,7 @@ class MakersBnB < Sinatra::Base
   end
 
   get "/rooms/your_requests" do
-    p @your_request = session[:your_requests].occupied_date
+    @your_request = session[:your_requests].occupied_date
     erb :'rooms/your_requests'
   end
 
