@@ -53,6 +53,8 @@ class MakersBnB < Sinatra::Base
     @occupied_date = session[:your_requests].occupied_date
     @room_id = session[:your_requests].room_id
     @username = session[:user].name
+    @approve_status = session[:your_requests].approved
+    
     connection = database_switcher
     result = connection.query("SELECT * FROM rooms WHERE id = '#{@room_id}';")
     

@@ -12,5 +12,6 @@ feature "Request room" do
     expect(page).to have_content "2021-10-19"
     expect(page).to have_content "castle"
     expect(page).to have_content "victorian folley"
+    expect(page).to have_content "false"
   end
 end
