@@ -23,20 +23,29 @@ class Rented_rooms
     end
   end
 
-  def approve_request(approval)
-    @approved = true
+  def self.approve_request(id:, approval:)
     if ENV["RACK_ENV"] == "test"
       connection = PG.connect(dbname: "makersbnb_test")
     else
       connection = PG.connect(dbname: "makersbnb")
     end
-
     if approval
-      connection.exec("UPDATE rented_rooms SET approved = 'true' WHERE id = #{@id}")
-      connection.exec("DELETE FROM rented_rooms WHERE room_id = #{@room_id} AND approved = 'false'")
+      connection.exec("UPDATE rented_rooms SET approved = 'true' WHERE id = #{id}")
+      remove_duplicates(id, connection)
     else
-      connection.exec("DELETE FROM rented_rooms WHERE id = '#{@id}'")
+      connection.exec("DELETE FROM rented_rooms WHERE id = '#{id}'")
     end
+  end
 
+  private
+  
+  def self.remove_duplicates(id, connection)
+    result = connection.query("SELECT room_id, occupied_date FROM rented_rooms WHERE id = #{id}")
+    result = connection.query("SELECT id FROM rented_rooms WHERE room_id = '#{result[0]['room_id']}' AND occupied_date = '#{result[0]['occupied_date']}' AND approved = 'false'")
+    i = 0
+    while i < result.ntuples
+      approve_request(id: result[i]['id'], approval: false)
+      i+=1
+    end
   end
 end

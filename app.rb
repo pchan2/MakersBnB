@@ -36,5 +36,21 @@ class MakersBnB < Sinatra::Base
     redirect '/rooms'
   end
 
+  get '/approvals' do
+    if ENV['RACK_ENV'] == 'test'
+      connection = PG.connect(dbname: 'makersbnb_test')
+    else
+      connection = PG.connect(dbname: 'makersbnb')
+    end
+    @result = connection.query("SELECT rented_rooms.id, rooms.title, rooms.description, rooms.price, rooms.location, rented_rooms.occupied_date FROM users, rooms, rented_rooms WHERE users.id = '#{session[:user].id}' AND users.id = rooms.user_id AND rented_rooms.room_id = rooms.id")
+    
+    erb :'/approvals'
+  end
+
+  post '/approvals' do
+    Rented_rooms.approve_request(id: params[:id], approval: params['approved']=="approve")
+    redirect '/approvals'
+  end
+
   run! if app_file == $0
 end

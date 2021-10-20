@@ -1,0 +1,16 @@
+<%i = 0%>
+<%while i<@result.ntuples %>
+  <%=@result[i]['id']%>
+  <%=@result[i]['title']%>
+  <%=@result[i]['description']%>
+  <%=@result[i]['price']%>
+  <%=@result[i]['location']%>
+  <%=@result[i]['occupied_date']%>
+
+  <form action='/approvals' method='post'>
+    <input type='hidden' name='id' value='<%=@result[i]['id']%>'/>
+    <input type='submit' name='approved' value='approve' />
+    <input type='submit' name='approved' value='decline' />
+  </form>
+  <%i+=1%>
+<%end%>
