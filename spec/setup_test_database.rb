@@ -17,8 +17,8 @@ end
 
 def populate_users(connection)
   #populating users
-  connection.exec("INSERT INTO users(name) VALUES('Dave');")
-  connection.exec("INSERT INTO users(name) VALUES('Susan');")
+  connection.exec("INSERT INTO users(name, password) VALUES('Dave', '12345678');")
+  connection.exec("INSERT INTO users(name, password) VALUES('Susan', '12345678');")
 end
 
 def populate_rooms(connection)

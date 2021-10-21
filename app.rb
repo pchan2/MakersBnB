@@ -18,9 +18,8 @@ class MakersBnB < Sinatra::Base
   end
 
   post "/new_user_submit" do
-    user = User.add(name: params[:username])
+    user = User.add(name: params[:username], password: params["password"])
     session[:user] = user
-
     redirect "/rooms"
   end
 
@@ -32,7 +31,7 @@ class MakersBnB < Sinatra::Base
   end
 
   post "/signin-submit" do
-    id = User.signin(name: params[:username])
+    id = User.signin(name: params[:username], password: params[:password])
     if id == nil
       session[:user] = false
       redirect "/signin"
