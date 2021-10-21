@@ -17,7 +17,7 @@ class User
 
   def self.signin(name:, password:)
     connection = database_switcher
-    result = connection.query("SELECT id FROM users WHERE name = '#{name}';")
+    result = connection.query("SELECT id FROM users WHERE name = '#{name}' AND password = '#{password}';")
     if result.ntuples == 0
       nil
     else

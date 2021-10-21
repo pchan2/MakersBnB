@@ -17,5 +17,8 @@ describe User do
     it "recognise an existing user" do
       expect(User.signin(name: "Dave", password: "12345678")).to eq "1"
     end
+    it "wont recognise a user with wrong password" do
+      expect(User.signin(name: "Dave", password: "wrongpword")).to eq nil
+    end
   end
 end
