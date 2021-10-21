@@ -26,13 +26,17 @@ describe Room do
 
   end
 
-  # describe ".available_rooms" do
-  #   it "filters available rooms" do
-  #     room = Room.add(user_id:2, title: "Sunny's house", description: "a 4 bedroom house", price: 100, location: "Cornwall", available_from: "2021-10-21", available_to: "2021-12-25")
+  describe ".available_rooms" do
+    it "filters available rooms" do
+      room1 = Room.add(user_id:2, title: "Sunny's house", description: "a 4 bedroom house", price: 100, location: "Cornwall", available_from: "2021-10-21", available_to: "2021-12-25")
+      room2 = Room.add(user_id:1, title: "Patrick's house", description: "a 1 bedroom house", price: 100, location: "Birmingham", available_from: "2022-10-21", available_to: "2022-10-25")
+      request_date = '2021-10-22'
+      return_rooms = Room.available_rooms(request_date)
 
-
-  #   end
-  # end
+      expect(return_rooms[0].title).to eq "Sunny's house"
+      expect(return_rooms[0].title).to_not eq "Patrick's house"
+    end
+  end
 
 end
 

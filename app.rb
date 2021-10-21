@@ -31,7 +31,13 @@ class MakersBnB < Sinatra::Base
   end
 
   post "/rooms" do
-    
+    session[:desired_date] = params[:desired_date]
+    redirect '/rooms/filtered_date'
+  end
+
+  get '/rooms/filtered_date' do
+    @filtered_rooms = Room.available_rooms(session[:desired_date])
+    erb :'/rooms/filtered_date'
   end
 
   get "/rooms/new" do

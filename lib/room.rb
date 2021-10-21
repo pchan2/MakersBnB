@@ -61,4 +61,33 @@ class Room
       )
     end
   end
+
+  def self.available_rooms(request_date)
+
+    # connection = database_switcher
+    if ENV['RACK_ENV'] == 'test'
+      connection = PG.connect(dbname: 'makersbnb_test')
+    else
+      connection = PG.connect(dbname: 'makersbnb')
+    end
+
+    available_rooms = connection.exec(
+        "SELECT * FROM rooms
+        WHERE available_from <= '#{request_date}'
+          AND available_to >= '#{request_date}';"
+      )
+
+      available_rooms.map do |room|
+        Room.new(
+          id: room['id'],
+          user_id: room['user_id'],
+          title: room['title'],
+          description: room['description'],
+          price: room['price'],
+          location: room['location'],
+          available_from: room['available_from'],
+          available_to: room['available_to']
+      )
+    end
+  end
 end

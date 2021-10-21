@@ -25,11 +25,11 @@ def populate_rooms(connection)
 
 
   connection.exec("INSERT INTO rooms(user_id, title, description, price, location, available_from, available_to)
-    VALUES(2, 'castle', 'a victorian folley', 80, 'Scotland','2021-10-21', '2021-11-12' );"
+    VALUES(2, 'castle', 'a victorian folley', 80, 'Scotland','2023-10-21', '2023-11-12' );"
   )
 
   connection.exec("INSERT INTO rooms(user_id, title, description, price, location, available_from, available_to)
-  VALUES(1, 'windmill', 'A really old windmill', 59.98, 'Essex', '2021-10-22', '2022-01-01');"
+  VALUES(1, 'windmill', 'A really old windmill', 59.98, 'Essex', '2023-10-22', '2023-01-01');"
 )
 end
 
