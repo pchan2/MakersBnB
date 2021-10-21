@@ -30,6 +30,10 @@ class MakersBnB < Sinatra::Base
     erb :'rooms'
   end
 
+  post "/rooms" do
+    
+  end
+
   get "/rooms/new" do
     erb :'rooms/new'
   end

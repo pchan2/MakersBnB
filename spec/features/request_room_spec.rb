@@ -15,3 +15,19 @@ feature "Request room" do
     expect(page).to have_content "false"
   end
 end
+
+feature "view available rooms" do
+  scenario "user can see and select rooms that are available" do
+    signin
+    visit '/rooms'
+    #todo add extra date field to query for availability
+    fill_in "desired_date", with: "2021-12-12"
+
+
+
+
+    
+    expect(page).to have_content "windmill"
+    expect(page).to_not have_content "castle"
+  end
+end
