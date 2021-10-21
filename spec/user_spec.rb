@@ -1,4 +1,5 @@
 require "user"
+require "BCrypt"
 
 describe User do
   describe "#.add" do
@@ -9,7 +10,14 @@ describe User do
       expect(user).to be_a User
       expect(user.id).to eq persisted_data.first["id"]
       expect(user.name).to eq "Bob"
-      expect(persisted_data.first["password"]).to eq "12345678"
+    end
+
+    it "hashes the password using BCrypt" do
+      User.add(name: "encrypted", password: "12345678")
+      password = PG.connect(dbname: "makersbnb_test").query("SELECT * FROM users WHERE name = 'encrypted';")
+
+      expect(password[0]["password"]).to_not eq nil
+      expect(password[0]["password"]).to_not eq "12345678"
     end
   end
 
@@ -17,6 +25,7 @@ describe User do
     it "recognise an existing user" do
       expect(User.signin(name: "Dave", password: "12345678")).to eq "1"
     end
+
     it "wont recognise a user with wrong password" do
       expect(User.signin(name: "Dave", password: "wrongpword")).to eq nil
     end

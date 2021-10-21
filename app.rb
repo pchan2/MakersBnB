@@ -38,8 +38,8 @@ class MakersBnB < Sinatra::Base
     else
       user = User.new(id: id, name: params[:username])
       session[:user] = user
+      redirect "/rooms"
     end
-    redirect "/rooms"
   end
 
   # post "/signin-submit" do
