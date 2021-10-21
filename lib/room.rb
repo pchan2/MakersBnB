@@ -1,5 +1,4 @@
 require 'pg'
-
 class Room
 
   attr_reader :id, :user_id, :title, :description, :price, :location, :available_from, :available_to
@@ -17,11 +16,7 @@ class Room
 
   def self.add(user_id:, title:, description:, price:, location:, available_from: "2020-12-10", available_to: "2022-01-01")
 
-    if ENV['RACK_ENV'] == 'test'
-      connection = PG.connect(dbname: 'makersbnb_test')
-    else
-      connection = PG.connect(dbname: 'makersbnb')
-    end
+    connection = database_switcher
 
     result = connection.exec_params(
       "INSERT INTO rooms (user_id, title, description, price, location, available_from, available_to)
@@ -41,11 +36,7 @@ class Room
   end
 
   def self.all
-    if ENV['RACK_ENV'] == 'test'
-      connection = PG.connect(dbname: 'makersbnb_test')
-    else
-      connection = PG.connect(dbname: 'makersbnb')
-    end
+    connection = database_switcher
 
     result = connection.exec("SELECT * FROM rooms")
     result.map do |room|
@@ -64,12 +55,7 @@ class Room
 
   def self.available_rooms(request_date)
 
-    # connection = database_switcher
-    if ENV['RACK_ENV'] == 'test'
-      connection = PG.connect(dbname: 'makersbnb_test')
-    else
-      connection = PG.connect(dbname: 'makersbnb')
-    end
+    connection = database_switcher
 
     available_rooms = connection.exec(
         "SELECT * FROM rooms

@@ -3,7 +3,6 @@ require "sinatra/reloader"
 require "./lib/user"
 require "./lib/room"
 require_relative "./lib/rented_rooms.rb"
-require "pg"
 require './spec/database_helpers'
 
 class MakersBnB < Sinatra::Base
