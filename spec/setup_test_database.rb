@@ -8,7 +8,8 @@ def setup_test_database
   connection.exec("TRUNCATE rented_rooms, rooms, users")
   connection.exec("ALTER SEQUENCE users_id_seq RESTART WITH 1;")
   connection.exec("ALTER SEQUENCE rooms_id_seq RESTART WITH 1;")
-  
+  connection.exec("ALTER SEQUENCE rented_rooms_id_seq RESTART WITH 1;")
+
   populate_users(connection)
   populate_rooms(connection)
   populate_rented_rooms(connection)
