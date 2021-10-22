@@ -22,9 +22,9 @@ describe Rented_rooms do
 
   describe "#approve_request" do
     it "approves the request" do
-      user = User.add(name: "Larry")
-      room = Room.add(user_id:user.id, title: "under-stairs cupboard", description: "a cupboard under the stairs", price: 999, location: "The Potter household")
-      booking = Rented_rooms.request_room(user_id:1, room_id: room.id, occupied_date: "1999-10-9")
+      user = User.add(name: "Larry", password: "12345678")
+      room = Room.add(user_id: user.id, title: "under-stairs cupboard", description: "a cupboard under the stairs", price: 999, location: "The Potter household")
+      booking = Rented_rooms.request_room(user_id: 1, room_id: room.id, occupied_date: "1999-10-9")
       Rented_rooms.approve_request(id: booking.id, approval: true)
       connection = PG.connect(dbname: "makersbnb_test")
 
@@ -34,9 +34,9 @@ describe Rented_rooms do
     end
 
     it "rejects the request" do
-      user = User.add(name: "Larry")
-      room = Room.add(user_id:user.id, title: "under-stairs cupboard", description: "a cupboard under the stairs", price: 999, location: "The Potter household")
-      booking = Rented_rooms.request_room(user_id:1, room_id: room.id, occupied_date: "1999-10-9")
+      user = User.add(name: "Larry", password: "12345678")
+      room = Room.add(user_id: user.id, title: "under-stairs cupboard", description: "a cupboard under the stairs", price: 999, location: "The Potter household")
+      booking = Rented_rooms.request_room(user_id: 1, room_id: room.id, occupied_date: "1999-10-9")
       Rented_rooms.approve_request(id: booking.id, approval: false)
       connection = PG.connect(dbname: "makersbnb_test")
 
@@ -45,11 +45,11 @@ describe Rented_rooms do
     end
 
     it "rejects all requests when one is approved on the same date" do
-      user = User.add(name: "Larry")
-      room = Room.add(user_id:user.id, title: "under-stairs cupboard", description: "a cupboard under the stairs", price: 999, location: "The Potter household")
-      
-      booking = Rented_rooms.request_room(user_id:1, room_id: room.id, occupied_date: "1999-10-9")
-      Rented_rooms.request_room(user_id:2, room_id: room.id, occupied_date: "1999-10-9")
+      user = User.add(name: "Larry", password: "12345678")
+      room = Room.add(user_id: user.id, title: "under-stairs cupboard", description: "a cupboard under the stairs", price: 999, location: "The Potter household")
+
+      booking = Rented_rooms.request_room(user_id: 1, room_id: room.id, occupied_date: "1999-10-9")
+      Rented_rooms.request_room(user_id: 2, room_id: room.id, occupied_date: "1999-10-9")
       Rented_rooms.approve_request(id: booking.id, approval: true)
 
       connection = PG.connect(dbname: "makersbnb_test")

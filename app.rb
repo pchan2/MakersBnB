@@ -5,6 +5,7 @@ require "./lib/room"
 require_relative "./lib/rented_rooms.rb"
 require './spec/database_helpers'
 
+
 class MakersBnB < Sinatra::Base
   configure :development do
     register Sinatra::Reloader
@@ -12,16 +13,41 @@ class MakersBnB < Sinatra::Base
 
   enable :sessions
 
+  get "/" do
+    erb :'new_user'
+  end
+
+  post "/new_user_submit" do
+    user = User.add(name: params[:username], password: params["password"])
+    session[:user] = user
+    redirect "/rooms"
+  end
+
   get "/signin" do
+    if session[:user] == false
+      @Reply = "Account not recognised"
+    end
     erb :'signin'
   end
 
   post "/signin-submit" do
-    user = User.add(name: params[:username])
-    session[:user] = user
-
-    redirect "/rooms"
+    id = User.signin(name: params[:username], password: params[:password])
+    if id == nil
+      session[:user] = false
+      redirect "/signin"
+    else
+      user = User.new(id: id, name: params[:username])
+      session[:user] = user
+      redirect "/rooms"
+    end
   end
+
+  # post "/signin-submit" do
+  #   user = User.add(name: params[:username])
+  #   session[:user] = user
+
+  #   redirect "/rooms"
+  # end
 
   get "/rooms" do
     @username = session[:user].name
@@ -63,28 +89,28 @@ class MakersBnB < Sinatra::Base
     @room_id = session[:your_requests].room_id
     @username = session[:user].name
     @approve_status = session[:your_requests].approved
-    
+
     connection = database_switcher
     result = connection.query("SELECT * FROM rooms WHERE id = '#{@room_id}';")
-    
+
     @room_details = result[0]
     erb :'rooms/your_requests'
   end
 
-  get '/approvals' do
-    if ENV['RACK_ENV'] == 'test'
-      connection = PG.connect(dbname: 'makersbnb_test')
+  get "/approvals" do
+    if ENV["RACK_ENV"] == "test"
+      connection = PG.connect(dbname: "makersbnb_test")
     else
-      connection = PG.connect(dbname: 'makersbnb')
+      connection = PG.connect(dbname: "makersbnb")
     end
     @result = connection.query("SELECT rented_rooms.id, rooms.title, rooms.description, rooms.price, rooms.location, rented_rooms.occupied_date FROM users, rooms, rented_rooms WHERE users.id = '#{session[:user].id}' AND users.id = rooms.user_id AND rented_rooms.room_id = rooms.id")
-    
+
     erb :'/approvals'
   end
 
-  post '/approvals' do
-    Rented_rooms.approve_request(id: params[:id], approval: params['approved']=="approve")
-    redirect '/approvals'
+  post "/approvals" do
+    Rented_rooms.approve_request(id: params[:id], approval: params["approved"] == "approve")
+    redirect "/approvals"
   end
 
   run! if app_file == $0
