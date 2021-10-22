@@ -61,6 +61,7 @@ class MakersBnB < Sinatra::Base
   end
 
   get '/rooms/filtered_date' do
+    @desired_date = session[:desired_date]
     @filtered_rooms = Room.available_rooms(session[:desired_date])
     erb :'/rooms/filtered_date'
   end
