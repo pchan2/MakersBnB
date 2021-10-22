@@ -11,11 +11,8 @@ class Rented_rooms
 
   def self.request_room(user_id:, room_id:, occupied_date:)
     approved = false
-    if ENV["RACK_ENV"] == "test"
-      connection = PG.connect(dbname: "makersbnb_test")
-    else
-      connection = PG.connect(dbname: "makersbnb")
-    end
+
+    connection = database_switcher
 
     exists = connection.query("SELECT * FROM rented_rooms WHERE occupied_date = '#{occupied_date}' AND room_id = #{room_id} AND user_id = #{user_id}")
     if(exists.ntuples == 0)
@@ -25,11 +22,9 @@ class Rented_rooms
   end
 
   def self.approve_request(id:, approval:)
-    if ENV["RACK_ENV"] == "test"
-      connection = PG.connect(dbname: "makersbnb_test")
-    else
-      connection = PG.connect(dbname: "makersbnb")
-    end
+
+    connection = database_switcher
+    
     if approval
       connection.exec("UPDATE rented_rooms SET approved = 'true' WHERE id = #{id}")
       remove_duplicates(id, connection)

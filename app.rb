@@ -3,8 +3,8 @@ require "sinatra/reloader"
 require "./lib/user"
 require "./lib/room"
 require_relative "./lib/rented_rooms.rb"
-require "pg"
-require "./spec/database_helpers"
+require './spec/database_helpers'
+
 
 class MakersBnB < Sinatra::Base
   configure :development do
@@ -53,6 +53,16 @@ class MakersBnB < Sinatra::Base
     @username = session[:user].name
     @rooms = Room.all
     erb :'rooms'
+  end
+
+  post "/rooms" do
+    session[:desired_date] = params[:desired_date]
+    redirect '/rooms/filtered_date'
+  end
+
+  get '/rooms/filtered_date' do
+    @filtered_rooms = Room.available_rooms(session[:desired_date])
+    erb :'/rooms/filtered_date'
   end
 
   get "/rooms/new" do

@@ -1,5 +1,10 @@
 Welcome <%= @username %>
 
+<form action='/rooms' method='POST' >
+  <input type='date' name='desired_date' />
+  <input type='submit' value='Submit Date' />
+</form>
+
 <%@rooms.each{|room|%>
   <p> 
   <li><%=room.title%> 

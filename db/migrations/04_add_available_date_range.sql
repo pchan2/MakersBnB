@@ -1,0 +1,1 @@
+ALTER TABLE rooms ADD COLUMN available_from DATE, ADD COLUMN available_to DATE;
