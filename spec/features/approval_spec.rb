@@ -9,7 +9,6 @@ feature "Approval" do
     connection = PG.connect(dbname: "makersbnb_test")
     result = connection.query("SELECT * FROM rented_rooms WHERE id = #{booking.id}")
     expect(result[0]["approved"]).to eq "t"
-    #expect(booking.approved).to eq true
   end
 
   scenario "decline approval requests" do
