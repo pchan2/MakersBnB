@@ -99,7 +99,7 @@ class MakersBnB < Sinatra::Base
     else
       connection = PG.connect(dbname: "makersbnb")
     end
-    @result = connection.query("SELECT rented_rooms.id, rooms.title, rooms.description, rooms.price, rooms.location, rented_rooms.occupied_date FROM users, rooms, rented_rooms WHERE users.id = '#{session[:user].id}' AND users.id = rooms.user_id AND rented_rooms.room_id = rooms.id")
+    @result = connection.query("SELECT rented_rooms.id, rooms.title, rooms.description, rooms.price, rooms.location, rented_rooms.occupied_date FROM users, rooms, rented_rooms WHERE users.id = '#{session[:user].id}' AND users.id = rooms.user_id AND rented_rooms.room_id = rooms.id AND rented_rooms.approved = 'f'")
 
     erb :'/approvals'
   end

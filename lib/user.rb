@@ -3,14 +3,12 @@ require_relative "../spec/database_helpers"
 require "BCrypt"
 
 class User
-
   attr_reader :id, :name
 
   def initialize(id:, name:)
     @id = id
     @name = name
   end
-
 
   def self.add(name:, password:)
     connection = database_switcher
