@@ -57,12 +57,28 @@ class Room
 
     connection = database_switcher
 
-    available_rooms = connection.exec(
-        "SELECT * FROM rooms
-        WHERE available_from <= '#{request_date}'
-          AND available_to >= '#{request_date}';"
-      )
+    # available_rooms = connection.exec(
+    #     "SELECT rooms.id, rooms.user_id, title, description, price, location, available_from, available_to FROM rooms, rented_rooms
+    #       WHERE available_from <= '#{request_date}'
+    #       AND available_to >= '#{request_date}'
+    #     ;"
+    #   )
 
+      #   available_rooms = connection.exec(
+      #   "SELECT rooms.id, rooms.user_id, title, description, price, location, available_from, available_to FROM rooms, rented_rooms
+      #     WHERE available_from <= '#{request_date}'
+      #     AND available_to >= '#{request_date}'
+      #   ;"
+      # )
+
+    available_rooms = connection.exec("
+      SELECT * FROM rooms
+        LEFT JOIN rented_rooms
+          ON rented_rooms.room_id = rooms.id
+        WHERE (rented_rooms.room_id IS NULL OR rented_rooms.approved = 'f')
+        AND available_from <= '#{request_date}'
+        AND available_to >= '#{request_date}';
+")
       available_rooms.map do |room|
         Room.new(
           id: room['id'],
