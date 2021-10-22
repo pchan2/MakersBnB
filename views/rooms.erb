@@ -10,17 +10,17 @@
 <br>
 <h2>All Listed Rooms</h2>
 <%@rooms.each{|room|%>
-  <p> 
-  <li><%=room.title%> 
-  <li><%=room.description%>
-  <li><%=room.price%>
-  <li><%=room.location%>
-  </p>
+  <ul> 
+    <li><%=room.title%></li>
+    <li><%=room.description%></li>
+    <li><%=room.price%></li>
+    <li><%=room.location%></li>
+    <li>Available from <%=room.available_from%> to <%=room.available_to%></li>
+  </ul>
 <%}%>
 
 <br>
 <a href='/rooms/new'><h3>List A New Room</h3></a>
 
-<br>
 <a href='/approvals'><h3>Approve Requests For Your Rooms</h3></a>
 

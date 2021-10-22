@@ -42,7 +42,6 @@ class MakersBnB < Sinatra::Base
     end
   end
 
-
   get "/rooms" do
     @username = session[:user].name
     @rooms = Room.all
@@ -71,11 +70,7 @@ class MakersBnB < Sinatra::Base
   end
 
   post "/rooms/request" do
-    # title = params[:title]
     connection = database_switcher
-
-    # result = connection.query("SELECT id FROM rooms WHERE title = '#{title}';")
-    # room_id = result[0]["id"].to_i
     session[:your_requests] = Rented_rooms.request_room(user_id: session[:user].id, room_id: params[:id].to_i, occupied_date: session[:desired_date])
     redirect "/rooms/your_requests"
   end
@@ -94,11 +89,7 @@ class MakersBnB < Sinatra::Base
   end
 
   get "/approvals" do
-    if ENV["RACK_ENV"] == "test"
-      connection = PG.connect(dbname: "makersbnb_test")
-    else
-      connection = PG.connect(dbname: "makersbnb")
-    end
+    connection = database_switcher
     @result = connection.query("SELECT rented_rooms.id, rooms.title, rooms.description, rooms.price, rooms.location, rented_rooms.occupied_date FROM users, rooms, rented_rooms WHERE users.id = '#{session[:user].id}' AND users.id = rooms.user_id AND rented_rooms.room_id = rooms.id AND rented_rooms.approved = 'f'")
 
     erb :'/approvals'
