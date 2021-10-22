@@ -1,10 +1,18 @@
+<h1>Enter Room Details for Listing</h1>
+
 <form action='/rooms/new' method='POST'>
   <input type='text' name='title'  placeholder='title' required/>
   <input type='text' name='description' placeholder='description' required />
   <input type='number' name='price' placeholder='price' required />
   <input type='text' name='location' placeholder='location' required />
-  <input type='date' name = 'available_from'/>
-  <input type='date' name = 'available_to'/>
+  <br>
+  <br>
+  <label for='available_from'>Available From</input>
+  <input type='date' id='available_from' name ='available_from' />
+  <br>
+  <label for='available_to'>Available To</input>
+  <input style='margin-left: 1.3rem;' type='date' id='available_to' name ='available_to' />
+  <br>
+  <br>
   <input type='submit' value='Create' />
-  
 </form>
