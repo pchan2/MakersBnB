@@ -18,7 +18,6 @@ end
 def populate_users(connection)
   #populating users
   User.add(name: 'Dave', password: '12345678')
-  #connection.exec("INSERT INTO users(name, password) VALUES('Dave', '12345678');")
   connection.exec("INSERT INTO users(name, password) VALUES('Susan', '12345678');")
 end
 

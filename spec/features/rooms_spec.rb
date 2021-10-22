@@ -24,14 +24,3 @@ feature "create room" do
     expect(page).to have_content 'Wales'
   end
 end
-
-# feature "list new space" do
-#   scenario "user sees a list of spaces" do
-#     signin
-    
-#     expect(page).to have_content 'Warwick Castle'
-#     expect(page).to have_content 'a victorian cottage'
-#     expect(page).to have_content '$100.00'
-#     expect(page).to have_content 'Wales'
-#   end
-# end

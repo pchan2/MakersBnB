@@ -5,8 +5,6 @@ feature "Request room" do
     fill_in "desired_date", with: "2023-11-12"
     click_button "submit"
     
-
-
     expect(page).to have_content "castle"
     expect(page).to have_content "victorian folley"
 

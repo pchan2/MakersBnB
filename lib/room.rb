@@ -57,20 +57,6 @@ class Room
 
     connection = database_switcher
 
-    # available_rooms = connection.exec(
-    #     "SELECT rooms.id, rooms.user_id, title, description, price, location, available_from, available_to FROM rooms, rented_rooms
-    #       WHERE available_from <= '#{request_date}'
-    #       AND available_to >= '#{request_date}'
-    #     ;"
-    #   )
-
-      #   available_rooms = connection.exec(
-      #   "SELECT rooms.id, rooms.user_id, title, description, price, location, available_from, available_to FROM rooms, rented_rooms
-      #     WHERE available_from <= '#{request_date}'
-      #     AND available_to >= '#{request_date}'
-      #   ;"
-      # )
-
     available_rooms = connection.exec("
       SELECT DISTINCT rooms.id, rooms.user_id, rooms.title, rooms.description, rooms.price, rooms.location, rooms.available_from, rooms.available_to FROM rooms
         LEFT JOIN rented_rooms

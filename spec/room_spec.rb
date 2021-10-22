@@ -23,7 +23,6 @@ describe Room do
 
       expect(Room.all.last.id).to eq room.id #checks the lastest added room has the same id as the returned one.
     end
-
   end
 
   describe ".available_rooms" do
