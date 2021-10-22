@@ -42,12 +42,6 @@ class MakersBnB < Sinatra::Base
     end
   end
 
-  # post "/signin-submit" do
-  #   user = User.add(name: params[:username])
-  #   session[:user] = user
-
-  #   redirect "/rooms"
-  # end
 
   get "/rooms" do
     @username = session[:user].name
@@ -61,8 +55,8 @@ class MakersBnB < Sinatra::Base
   end
 
   get '/rooms/filtered_date' do
-    
-    @filtered_rooms = Room.available_rooms(session[:desired_date])
+    @desired_date = session[:desired_date]
+    @filtered_rooms = Room.available_rooms(@desired_date)
     
     erb :'/rooms/filtered_date'
   end
