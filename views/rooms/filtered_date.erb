@@ -1,9 +1,12 @@
 <% @filtered_rooms.each do |room| %>
-  <ul>
-    <li><%= room.title %></li>
-    <li><%= room.description %></li>
-    <li><%= room.price %></li>
-    <li><%= room.location %></li>
-    <!--wrap in form, add submit button -->
-  </ul>
+  <form action = "/rooms/request" method = 'POST'>
+    <input type="hidden" name='id' value=<%=room.id%>>
+    <ul>
+      <li><%= room.title %></li>
+      <li><%= room.description %></li>
+      <li><%= room.price %></li>
+      <li><%= room.location %></li>
+    </ul>
+    <input type="submit" value="submit">
+  </form>
 <% end %>

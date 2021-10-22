@@ -72,12 +72,12 @@ class Room
       # )
 
     available_rooms = connection.exec("
-      SELECT * FROM rooms
+      SELECT DISTINCT rooms.id, rooms.user_id, rooms.title, rooms.description, rooms.price, rooms.location, rooms.available_from, rooms.available_to FROM rooms
         LEFT JOIN rented_rooms
           ON rented_rooms.room_id = rooms.id
         WHERE (rented_rooms.room_id IS NULL OR rented_rooms.approved = 'f')
         AND available_from <= '#{request_date}'
-        AND available_to >= '#{request_date}';
+        AND available_to >= '#{request_date}'
 ")
       available_rooms.map do |room|
         Room.new(

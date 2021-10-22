@@ -2,7 +2,7 @@ Welcome <%= @username %>
 
 <form action='/rooms' method='POST' >
   <input type='date' name='desired_date' />
-  <input type='submit' value='Submit Date' />
+  <input type='submit' value='submit' />
 </form>
 
 <%@rooms.each{|room|%>
@@ -14,8 +14,8 @@ Welcome <%= @username %>
   </p>
 <%}%>
 
-<form action='/rooms/request' method='POST' >
+<%# <form action='/rooms/request' method='POST' >
   <input type='text' name='title' />
   <input type='date' name='occupied_date' />
   <input type='submit' value='Submit' />
-</form>
+</form> %>

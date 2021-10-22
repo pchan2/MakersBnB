@@ -61,7 +61,9 @@ class MakersBnB < Sinatra::Base
   end
 
   get '/rooms/filtered_date' do
+    
     @filtered_rooms = Room.available_rooms(session[:desired_date])
+    
     erb :'/rooms/filtered_date'
   end
 
@@ -75,12 +77,12 @@ class MakersBnB < Sinatra::Base
   end
 
   post "/rooms/request" do
-    title = params[:title]
+    # title = params[:title]
     connection = database_switcher
 
-    result = connection.query("SELECT id FROM rooms WHERE title = '#{title}';")
-    room_id = result[0]["id"].to_i
-    session[:your_requests] = Rented_rooms.request_room(user_id: session[:user].id, room_id: room_id, occupied_date: params[:occupied_date])
+    # result = connection.query("SELECT id FROM rooms WHERE title = '#{title}';")
+    # room_id = result[0]["id"].to_i
+    session[:your_requests] = Rented_rooms.request_room(user_id: session[:user].id, room_id: params[:id].to_i, occupied_date: session[:desired_date])
     redirect "/rooms/your_requests"
   end
 
