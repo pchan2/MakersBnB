@@ -2,17 +2,20 @@ feature "Request room" do
   scenario "A user can request to book an existing room" do
     signin
 
-    fill_in("title", with: "castle")
-    fill_in("occupied_date", with: "2021-10-19")
-    click_button "Submit"
+    fill_in "desired_date", with: "2023-11-12"
+    click_button "submit"
+    
 
-    connection = PG.connect(dbname: "makersbnb_test")
-    user_id = connection.exec("SELECT id FROM users WHERE name = 'parsle';")
 
-    expect(page).to have_content "2021-10-19"
+    expect(page).to have_content "castle"
+    expect(page).to have_content "victorian folley"
+
+    click_button  "submit"
+    expect(page).to have_content "2023-11-12"
     expect(page).to have_content "castle"
     expect(page).to have_content "victorian folley"
     expect(page).to have_content "false"
+
   end
 end
 
@@ -26,7 +29,7 @@ feature "view available rooms" do
     Room.add(user_id: 2, title: "Joe's hut", description: "Made of metal", price: 19, location: "Scotland", available_from: "2021-12-12", available_to: "2021-12-19")
 
     fill_in "desired_date", with: "2021-12-12"
-    click_button "Submit Date"
+    click_button "submit"
 
     expect(page).to have_content "Jane's hut"
     expect(page).to have_content "Joe's hut"

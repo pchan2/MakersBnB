@@ -1,8 +1,9 @@
 <h1>Welcome <%= @username %></h1>
 <form action='/rooms' method='POST' >
+
   <label for='desired_date'>Select A Booking Date</><br>
   <input type='date' id='desired_date' name='desired_date' />
-  <input type='submit' value='Submit Date' />
+  <input type='submit' value='submit' />
 </form>
 
 <br>
@@ -17,14 +18,9 @@
   </p>
 <%}%>
 
-<form action='/rooms/request' method='POST' >
-  <input type='text' name='title' />
-  <input type='date' name='occupied_date' />
-  <input type='submit' value='Submit' />
-</form>
-
 <br>
 <a href='/rooms/new'><h3>List A New Room</h3></a>
 
 <br>
 <a href='/approvals'><h3>Approve Requests For Your Rooms</h3></a>
+
