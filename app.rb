@@ -65,7 +65,7 @@ class MakersBnB < Sinatra::Base
   end
 
   post "/rooms/new" do
-    Room.add(user_id: session[:user].id, title: params[:title], description: params[:description], price: params[:price], location: params[:location])
+    Room.add(user_id: session[:user].id, title: params[:title], description: params[:description], price: params[:price], location: params[:location], available_from: params[:available_from], available_to: params[:available_to])
     redirect "/rooms"
   end
 
