@@ -11,10 +11,11 @@
 <h2>All Listed Rooms</h2>
 <%@rooms.each{|room|%>
   <p> 
-  <li><%=room.title%> 
-  <li><%=room.description%>
-  <li><%=room.price%>
-  <li><%=room.location%>
+  <li><%=room.title%></li>
+  <li><%=room.description%></li>
+  <li><%=room.price%></li>
+  <li><%=room.location%></li>
+  <li>Available from <%=room.available_from%> to <%=room.available_to%></li>
   </p>
 <%}%>
 
