@@ -43,4 +43,40 @@ Mockups
 Mockups for MakersBnB are available here.
 
 
-USER STORIES
+USER STORIES (9)
+
+As a user
+So that I can use the site easily and securely
+I'd like to be able to sign up to the site
+
+As a customer
+So that I can find somewhere to stay
+I'd like to request to hire a space.
+
+As a user booking a space
+so that I can't book a space which is already booked
+I'd like to only see spaces which aren't booked
+
+As a user
+So that I can rent my space
+I'd like to be able to list a new space
+
+As a user
+So that I can rent all my property
+I'd like to list multiple spaces
+
+As a USER
+So that people know what the space is like
+I'd like to provide a description and price
+
+As a user
+So people can see when spaces are available
+I'd like to offer a range of dates where my space is available
+
+As a space owning user
+So that I can control who stays in my room
+I'd like to approve customers' requests for rooms
+
+As a user who's posting a space
+So that I can choose who's staying in my room
+I'd like to still get bookings even if I have a pending request
